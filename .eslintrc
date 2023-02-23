@@ -1,0 +1,82 @@
+// @typescript-eslint/parser   ESLint的解析器，用于解析typescript，从而检查和规范Typescript代码
+// @typescript-eslint/eslint-plugin   这是一个ESLint插件，包含了各类定义好的检测Typescript代码的规范
+// "parser": "vue-eslint-parser", // parser 是用来将 js 转化为 AST 树的，默认 parser 为 espree，但是只能处理js这些，并不能将vue 模板语法解析成对应的AST，所以需要用另外的 parser，vue3 我们使用的是 vue-eslint-parser
+// 问题来了，当我们用 ts 的时候，vue-eslint-parser 是没办法解析 script 中的内容的
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended", //定义文件继承的子规范
+    "eslint-config-airbnb-base", // 设定了字符串使用单引号的。
+    "plugin:vue/vue3-recommended",
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    // 直接使用 defineProps，defineEmits 会出现 undef 的错误，如果需要将这些指令暴露到全局环境，可以配置：
+    // "vue/setup-compiler-macros": true,
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "globals": {
+    "defineProps": "readonly",
+    "defineEmits": "readonly"
+  },
+  "plugins": [
+    "vue",
+    "@typescript-eslint"
+  ],
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser", //定义ESLint的解析器
+    "sourceType": "module", // 引入方式
+    "allowImportExportEverywhere": true,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "import/extensions": [
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx"
+    ]
+  },
+  "rules": {
+    "no-console": "off",
+    "no-continue": "off",
+    "no-restricted-syntax": "off",
+    "no-plusplus": "off",
+    "no-param-reassign": "off",
+    "no-shadow": "off",
+    "guard-for-in": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "vue/first-attribute-linebreak": 0
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.vue"
+      ],
+      "rules": {
+        "vue/component-name-in-template-casing": [
+          2,
+          "kebab-case"
+        ],
+        "vue/require-default-prop": 0,
+        "vue/multi-word-component-names": 0,
+        "vue/no-reserved-props": 0,
+        "vue/no-v-html": 0
+      }
+    }
+  ]
+}
+// plugin 使用来自定义规则的（）
+// extends 是plugin中的规则集合
+// rules 是单个规则配置
+// plugin 命名方式为：eslint-plugin-myplugin，extends 命名方式为：eslint-config-myconfig
+// plugin经常会自带一些 extend，配置为 plugin:myplugin/...
